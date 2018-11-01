@@ -9,17 +9,34 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 # Write your functions to interact with the database here :
+def create_product(name,price, quantity,description):
+    product = Product(
+    	name=name,
+        price=price,
+        quantity=quantity,
+        description=description)
+    if product.price>300:
+    	print("errorrrrrrrrrrrrrr")
+    else:
+    	session.add(product)
+    	session.commit()
 
-def create_product():
-  #TODO: complete the functions (you will need to change the function's inputs)
-  pass
+def update_product(name, price,quantity):
+   product = session.query(
+       Product).filter_by(
+       name=name).first()
+   if product.price>300:
+    	print("errorrrrrrrrrrrrrr")
+   else:
+   		product.price = price
+   product.quantity=quantity
+   session.commit()
 
-def update_product():
-  #TODO: complete the functions (you will need to change the function's inputs)
-  pass
+
 
 def delete_product(id):
-  pass
+	session.query(Product).filter_by(id=id).delete()
+	session.commit()
 
 def get_product(id):
   pass
